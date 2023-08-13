@@ -20,7 +20,7 @@ public class SettingsController {
         this.settingsService = settingsService;
     }
 
-    @RequestMapping(value = "/get-user-details", method = RequestMethod.POST)
+    @GetMapping("/get-user-details")
     public ResponseEntity getUserDetailsForSettings(@RequestBody SettingsModel settingsModel) {
         settingsModel = settingsService.getUserDetailsForSettings(settingsModel.getUsername());
         if(settingsModel != null) {
@@ -29,7 +29,7 @@ public class SettingsController {
         return jsonResponse.createJsonResponseFailure(null, "Failed to get User Detail");
     }
 
-    @RequestMapping(value = "update-user-details", method = RequestMethod.POST)
+    @PostMapping("/update-user-details")
     public ResponseEntity updateUserDetails(@RequestBody SettingsModel settingsModel) {
         settingsModel = settingsService.updateUserDetailsForSettings(settingsModel);
         if(settingsModel != null) {

@@ -1,6 +1,7 @@
 package com.farmsimple.service;
 
 import com.farmsimple.model.CartItemsModel;
+import com.farmsimple.model.UserModel;
 import com.farmsimple.repository.CartsRepository;
 import com.farmsimple.repository.MedicineRepository;
 import com.farmsimple.repository.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -40,5 +42,21 @@ public class CartService {
         cartItemsModel.setPharmacyName(userRepository.getUserModelByUsername(cartItemsModel.getUsername()).getPharmacyName());
         cartItemsModel.setPrice(medicineRepository.getMedicineModelById(cartItemsModel.getId()).getMedRate());
         cartsRepository.save(cartItemsModel);
+    }
+    public CartItemsModel getOrderedCartItemOfUserById(String username, String medName, int id) {
+        return cartsRepository.getCartItemsModelByUsernameAndIdAndMedNameAndIsOrdered(username, id, medName, 1);
+    }
+    public void deleteCartItem(String username, int id, String medName) {
+        cartsRepository.deleteCartItemsModelByUsernameAndIdAndMedName(username, id, medName);
+    }
+    public void declineOrder(String username, int id, String medName) {
+        cartsRepository.updateCartItemsModelByUsernameAndIdAndMedNameAndIsOrdered(username, id, medName, 1);
+    }
+    public List<CartItemsModel> getOrderedItemsForApproval(String username) {
+        UserModel userModel = userRepository.getUserModelByUsername(username);
+        if(userModel != null) {
+            return cartsRepository.getAllByPharmacyNameAndIsOrdered(userModel.getPharmacyName(), 1);
+        }
+        return new ArrayList<>();
     }
 }

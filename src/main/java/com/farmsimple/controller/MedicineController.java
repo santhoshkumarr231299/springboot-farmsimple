@@ -26,12 +26,12 @@ public class MedicineController {
         this.validationUtil = validationUtil;
     }
 
-    @RequestMapping(value = "/get-medicines", method = RequestMethod.GET)
+    @GetMapping("/get-medicines")
     public ResponseEntity getAllActiveMedicines() {
         return jsonResponse.createJsonResponseSuccess(medicineService.getAllActiveMedicines(1, ""), "Got medicines successfully");
     }
 
-    @RequestMapping(value = "/post-medicine", method = RequestMethod.POST)
+    @PostMapping("/post-medicine")
     public ResponseEntity createNewMedicine(@RequestBody MedicineModel medicineModel) {
         String validationMessage = "";
         List<Validators> validatorsList = Arrays.asList(Validators.MEDICINE_NAME, Validators.MANUFACTURER_NAME, Validators.PHARMACY_NAME, Validators.USERNAME);
@@ -46,7 +46,7 @@ public class MedicineController {
         }
     }
 
-    @RequestMapping(value = "/get-search-medicines", method = RequestMethod.GET)
+    @GetMapping("/get-search-medicines")
     public ResponseEntity getSearchMedicines(@RequestParam(name = "search") String search) {
         // getting purchase page medicines
         return jsonResponse.createJsonResponseSuccess(medicineService.getSearchMedicines(search), "Got medicines successfully");

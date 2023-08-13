@@ -26,7 +26,7 @@ public class LoginController {
         this.validationUtil = validationUtil;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping("/login")
     public ResponseEntity loginUser(@RequestBody UserModel userModel) {
         userModel = loginService.loginUser(userModel);
         if(userModel != null) {
@@ -35,7 +35,7 @@ public class LoginController {
         return jsonResponse.createJsonResponseFailure(null, "Username does not exists");
     }
 
-    @RequestMapping(value = "/new-user", method = RequestMethod.POST)
+    @PostMapping("/new-user")
     public ResponseEntity createUser(@RequestBody UserModel userModel) {
         List<Validators> validatorsList = Arrays.asList(Validators.USERNAME, Validators.PASSWORD, Validators.EMAIL, Validators.MOBILE_NUMBER);
         if(userModel.getPharmacyName() != null && userModel.getPharmacyName().length() > 0) {
@@ -61,7 +61,7 @@ public class LoginController {
         return jsonResponse.createJsonResponseFailure(null, "Failed to create New User");
     }
 
-    @RequestMapping(value = "/check-username", method = RequestMethod.POST)
+    @PostMapping("/check-username")
     public ResponseEntity checkUserDuplicateDetails(@RequestBody UserModel userModel) {
         if(loginService.isUserNameExists(userModel.getUsername())) {
             return jsonResponse.createJsonResponseFailure(null, "Username already Exists");
@@ -73,7 +73,7 @@ public class LoginController {
         return jsonResponse.createJsonResponseSuccess(null, "User Details aer unique");
     }
 
-    @RequestMapping(value = "/update-last-accessed", method = RequestMethod.POST)
+    @PostMapping("/update-last-accessed")
     public ResponseEntity updateLastAccessedScreenForUser(@RequestBody UserModel userModel) {
         loginService.updateLastAccessedScreenForUser(userModel);
         return jsonResponse.createJsonResponseSuccess(null, null);

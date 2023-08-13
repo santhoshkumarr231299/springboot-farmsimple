@@ -30,4 +30,7 @@ public class PharmacistModel {
 
     @Column(name = "added_by", columnDefinition = "varchar(256)")
     private String addedBy;
+
+    @Column(name = "pharmacy_name", columnDefinition = "varchar(256)")
+    private String pharmacyName;
 }

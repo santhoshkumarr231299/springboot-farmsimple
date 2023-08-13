@@ -16,4 +16,8 @@ public interface CartsRepository extends JpaRepository<CartItemsModel, String> {
     void updateQuantityByUsernameAndId(String username, int id, int quantity);
     void deleteCartItemsModelByUsernameAndId(String username, int id);
     boolean existsByUsernameAndIdAndMedNameAndIsOrdered(String username, int id, String medName, int isOrdered);
+    CartItemsModel getCartItemsModelByUsernameAndIdAndMedNameAndIsOrdered(String username, int id, String medName, int isOrdered);
+    void deleteCartItemsModelByUsernameAndIdAndMedName(String username, int id, String medName);
+    void updateCartItemsModelByUsernameAndIdAndMedNameAndIsOrdered(String username, int id, String medName, int isOrdered);
+    List<CartItemsModel> getAllByPharmacyNameAndIsOrdered(String pharmacyName, int isOrdered);
 }

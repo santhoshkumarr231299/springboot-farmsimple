@@ -19,13 +19,13 @@ public class InvoiceController {
         this.invoiceService = invoiceService;
     }
 
-    @RequestMapping(value = "/get-invoices", method = RequestMethod.GET)
+    @GetMapping("/get-invoices")
     public ResponseEntity getAllInvoices() {
         String username = ""; //get username from session
         return jsonResponse.createJsonResponseSuccess(invoiceService.getAllInvoices(username), "Got Invoices");
     }
 
-    @RequestMapping(value = "/post-invoice", method = RequestMethod.POST)
+    @PostMapping("/post-invoice")
     public ResponseEntity createInvoice(@RequestBody InvoicesModel invoicesModel) {
         String username = ""; //get username from session
         String pharmacyName = ""; //get Pharmacy name from session

@@ -2,7 +2,6 @@ package com.farmsimple.service;
 
 import com.farmsimple.model.UserModel;
 import com.farmsimple.repository.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.Optional;

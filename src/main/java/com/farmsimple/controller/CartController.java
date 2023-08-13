@@ -22,19 +22,19 @@ public class CartController {
         this.validationUtil = validationUtil;
     }
 
-    @RequestMapping(value = "/get-cart-items", method = RequestMethod.GET)
+    @GetMapping("/get-cart-items")
     public ResponseEntity getCartItems() {
         String username = ""; //get username from session
         return jsonResponse.createJsonResponseSuccess(cartService.getCartItems(username), "Got the Cart Items");
     }
 
-    @RequestMapping(value = "/get-cart-items-count", method = RequestMethod.GET)
+    @GetMapping("get-cart-items-count")
     public ResponseEntity getCartItemsCount() {
         String username = ""; //get username from session
         return jsonResponse.createJsonResponseSuccess(cartService.getCartItemsCount(username), "Got the Cart Items Count");
     }
 
-    @RequestMapping(value = "/update-cart-items", method = RequestMethod.POST)
+    @PostMapping("/update-cart-items")
     public ResponseEntity updateCartItemQuantity(@RequestBody CartItemsModel cartItemsModel) {
         if(cartItemsModel.getUsername() == null || "".equals(cartItemsModel.getUsername())) {
             return jsonResponse.createJsonResponseFailure(null, "Missing required fields");
@@ -46,7 +46,7 @@ public class CartController {
         return jsonResponse.createJsonResponseSuccess(null, "Quantity updated");
     }
 
-    @RequestMapping(value = "/delete-cart-items", method = RequestMethod.POST)
+    @PostMapping("/delete-cart-items")
     public ResponseEntity deleteCartItem(@RequestBody CartItemsModel cartItemsModel) {
         if(cartItemsModel.getUsername() == null || "".equals(cartItemsModel.getUsername())) {
             return jsonResponse.createJsonResponseFailure(null, "Missing required fields");
@@ -55,7 +55,7 @@ public class CartController {
         return jsonResponse.createJsonResponseSuccess(null, "Item deleted successfully");
     }
 
-    @RequestMapping(value = "/add-to-cart", method = RequestMethod.POST)
+    @PostMapping("/add-to-cart")
     public ResponseEntity addItemToCart(@RequestBody CartItemsModel cartItemsModel) {
         if(cartItemsModel.getMedName() != null && "".equals(validationUtil.validateMedicineName(cartItemsModel.getMedName()))) {
             String username = ""; //get username from session
