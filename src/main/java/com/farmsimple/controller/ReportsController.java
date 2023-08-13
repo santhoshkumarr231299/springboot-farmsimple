@@ -19,13 +19,14 @@ public class ReportsController {
         this.reportsService = reportsService;
     }
 
-    @RequestMapping(value = "/get-reports", method = RequestMethod.GET)
+    @GetMapping("/get-reports")
     public ResponseEntity getAllReports() {
         String pharmacyName = ""; //get pharmacy name from session
         List<ReportModel> reportModelList = reportsService.getAllReports(pharmacyName);
         return jsonResponse.createJsonResponseSuccess(reportModelList, "Got Report Models");
     }
 
+    @PostMapping("/post-report")
     public ResponseEntity createReport(@RequestBody ReportModel reportModel) {
         String username = ""; //get username from session
         String pharmacyName = ""; //get pharmacy name from session

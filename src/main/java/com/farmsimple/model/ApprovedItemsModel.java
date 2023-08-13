@@ -13,8 +13,8 @@ import lombok.Setter;
 @Table(name = "approved_items")
 public class ApprovedItemsModel {
     @Id
-    @Column(name = "mid", columnDefinition = "varchar(256)")
-    private String id;
+    @Column(name = "mid", columnDefinition = "int")
+    private int id;
 
     @Column(name = "username", columnDefinition = "varchar(256)")
     private String username;
@@ -22,8 +22,8 @@ public class ApprovedItemsModel {
     @Column(name = "medname", columnDefinition = "varchar(256)")
     private String medName;
 
-    @Column(name = "quantity", columnDefinition = "varchar(256)")
-    private String quantity;
+    @Column(name = "quantity", columnDefinition = "int")
+    private int quantity;
 
     @Column(name = "price", columnDefinition = "int")
     private int price;
