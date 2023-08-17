@@ -5,16 +5,15 @@ import com.farmsimple.model.UserModel;
 import com.farmsimple.repository.CartsRepository;
 import com.farmsimple.repository.MedicineRepository;
 import com.farmsimple.repository.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-@ResponseBody
+@Service
 public class CartService {
     private CartsRepository cartsRepository;
     private UserRepository userRepository;
@@ -50,7 +49,7 @@ public class CartService {
         cartsRepository.deleteCartItemsModelByUsernameAndIdAndMedName(username, id, medName);
     }
     public void declineOrder(String username, int id, String medName) {
-        cartsRepository.updateCartItemsModelByUsernameAndIdAndMedNameAndIsOrdered(username, id, medName, 1);
+//        cartsRepository.updateCartItemsModelByUsernameAndIdAndMedNameAndIsOrdered(username, id, medName, 1);
     }
     public List<CartItemsModel> getOrderedItemsForApproval(String username) {
         UserModel userModel = userRepository.getUserModelByUsername(username);
@@ -58,5 +57,12 @@ public class CartService {
             return cartsRepository.getAllByPharmacyNameAndIsOrdered(userModel.getPharmacyName(), 1);
         }
         return new ArrayList<>();
+    }
+    public void updater(String answer) throws Exception {
+        Connection con = null;
+        String query = "update table set column = " + answer;
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.executeUpdate();
     }
 }

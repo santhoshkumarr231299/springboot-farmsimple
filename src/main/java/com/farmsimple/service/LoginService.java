@@ -4,9 +4,11 @@ import com.farmsimple.model.UserModel;
 import com.farmsimple.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
-@Component
+@Service
 public class LoginService {
 
     private UserRepository userRepository;
@@ -33,7 +35,7 @@ public class LoginService {
             userModel.setBranchId(1);
         } else {
             userModel.setHaveAccessTo("[8]");
-            userModel.setRole(2);
+            userModel.setRole(0);
             userModel.setLastAccessed(8);
             userModel.setBranchId(-1);
         }
