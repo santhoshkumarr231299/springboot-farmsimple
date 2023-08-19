@@ -21,4 +21,9 @@ public interface UserRepository extends JpaRepository<UserModel, String> {
 
     UserModel getUserModelByUsername(String username);
 
+    @Query("update UserModel set password = :password where username = :username")
+    void updatePassword(String password, String username);
+
+    @Query("update UserModel set subscriptionPack = :subscriptionPack, dateOfSubscription = current_date where pharmacyName = :pharmacyName")
+    void activateSubscription(String subscriptionPack, String pharmacyName);
 }
