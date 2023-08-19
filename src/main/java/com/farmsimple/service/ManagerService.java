@@ -38,7 +38,7 @@ public class ManagerService {
         userModel.setBranchId(managerModel.getBranchId());
         userModel.setPharmacyName(pharmacyName);
         userModel.setPassword("manager");
-        userModel.setRole(4);
+        userModel.setRole(2);
         userModel.setLastAccessed(1);
         userModel.setBranchId(1);
         userModel.setHaveAccessTo("[1][2][4][6][7][9]");
