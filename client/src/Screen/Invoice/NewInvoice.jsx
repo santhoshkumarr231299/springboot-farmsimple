@@ -38,16 +38,14 @@ function InvoiceReportPage(props) {
     let temp = [];
     let counter = 0;
     axios
-      .post("/get-invoices", {
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
-      })
+      .get("/get-invoices")
       .then((resp) => {
-        resp.data.forEach((da) => {
+        resp.data.data.forEach((da) => {
           temp.push({
             id: ++counter,
             username: da.username,
-            pharmname: da.pharmName,
-            branch: da.branch,
+            pharmname: da.pharmacyName,
+            branch: da.branchId,
             quantity: da.quantity,
             amount: da.amount,
             date: da.invoiceDate,
@@ -186,11 +184,10 @@ function AddInvoicePage(props) {
     setIsLoading(true);
     axios
       .post("/post-invoice", {
-        pharmName: pharmName,
-        branch: branch,
+        pharmacyName: pharmName,
+        branchId: branch,
         quantity: quantity,
         amount: amount,
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
       })
       .then((resp) => {
         setOpen(true);

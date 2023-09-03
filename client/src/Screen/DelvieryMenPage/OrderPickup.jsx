@@ -47,7 +47,6 @@ function OrderPickupPage(props) {
         .post("/pickup-order", {
           username: userM.name,
           medName: userM.mname,
-          secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
         })
         .then((resp) => {
           setOpen(true);
@@ -71,17 +70,15 @@ function OrderPickupPage(props) {
     let temp = [];
     let counter = 0;
     axios
-      .post("/get-approved-items", {
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
-      })
+      .get("/get-approved-items")
       .then((resp) => {
-        resp.data.forEach((data) => {
+        resp.data.data.forEach((data) => {
           temp.push({
             id: ++counter,
             name: data.username,
-            mname: data.mname,
+            mname: data.medName,
             quantity: data.quantity,
-            mobilenumber: data.mobileNumber,
+            // mobilenumber: data.mobileNumber,
           });
         });
         setDataGridRows(temp);
@@ -204,18 +201,16 @@ function YourDeliveryPage(props) {
     let temp = [];
     let counter = 0;
     axios
-      .post("/get-delivery-orders", {
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
-      })
+      .get("/get-delivery-orders")
       .then((resp) => {
         setOrders(resp.data);
-        resp.data.forEach((data) => {
+        resp.data.data.forEach((data) => {
           temp.push({
             id: ++counter,
             name: data.username,
-            mname: data.mname,
+            mname: data.medName,
             quantity: data.quantity,
-            mobilenumber: data.mobileNumber,
+            // mobilenumber: data.mobileNumber,
           });
         });
         setDataGridRows(temp);

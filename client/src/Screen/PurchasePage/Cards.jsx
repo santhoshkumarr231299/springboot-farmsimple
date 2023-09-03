@@ -20,7 +20,7 @@ export default function ImgMediaCard(props) {
     e.preventDefault();
     await axios
       .post("/add-to-cart", {
-        mid: props.id,
+        id: props.id,
         medName: props.name,
         quantity: 1,
       })

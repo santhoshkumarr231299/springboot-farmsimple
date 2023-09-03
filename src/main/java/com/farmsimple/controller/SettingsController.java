@@ -20,7 +20,7 @@ public class SettingsController {
         this.settingsService = settingsService;
     }
 
-    @GetMapping("/get-user-details")
+    @PostMapping("/get-user-details")
     public ResponseEntity getUserDetailsForSettings(@RequestBody SettingsModel settingsModel) {
         settingsModel = settingsService.getUserDetailsForSettings(settingsModel.getUsername());
         if(settingsModel != null) {

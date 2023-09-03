@@ -23,7 +23,7 @@ class App extends Component {
     return (
       <div className="App">
         <Suspense fallback={<CircularProgress />}>
-          <BrowserRouter>
+          <BrowserRouter basename="/client">
             <Routes>
               <Route path="/" element={<Navigate to="/login" />} />
               <Route

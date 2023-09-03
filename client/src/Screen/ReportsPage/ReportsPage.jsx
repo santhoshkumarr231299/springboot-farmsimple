@@ -34,19 +34,17 @@ function ReportPage(props) {
     setIsLoading(true);
     let temp = [];
     axios
-      .post("/get-reports", {
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
-      })
+      .get("/get-reports")
       .then((resp) => {
-        resp.data.forEach((tdata) => {
+        resp.data.data.forEach((tdata) => {
           temp.push({
             id: tdata.id,
             title: tdata.reportTitle,
             subject: tdata.reportSubject,
             description: tdata.reportDesc,
-            date: tdata.reportDate.substring(0, 10),
-            role: tdata.role,
-            reporter: tdata.reportedBy,
+            date: tdata.reportedDate.substring(0, 10),
+            role: 1,
+            reporter: tdata.username,
           });
         });
         setDataGridRows(temp);
@@ -190,7 +188,6 @@ function AddReportPage(props) {
           reportTitle: title.trim(),
           reportSubject: subject.trim(),
           reportDesc: desc.trim(),
-          secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
         })
         .then((resp) => {
           setOpen(true);

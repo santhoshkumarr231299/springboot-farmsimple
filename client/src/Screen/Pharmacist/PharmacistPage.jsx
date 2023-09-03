@@ -43,18 +43,16 @@ function PharmacistPage(props) {
     let temp = [];
     let counter = 0;
     axios
-      .post("/get-pharmacists-details", {
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
-      })
+      .get("/get-pharmacists-details")
       .then((resp) => {
-        resp.data.forEach((data) => {
+        resp.data.data.forEach((data) => {
           temp.push({
             id: ++counter,
-            name: data.name,
+            name: data.username,
             email: data.email,
             mobilenumber: data.mobileNumber,
             address: data.address,
-            aadhar: data.aadhar,
+            aadhar: data.aadharNumber,
           });
         });
         setIsLoading(false);
@@ -236,12 +234,11 @@ function AddPharmacistPage(props) {
             setIsLoading(true);
             axios
               .post("/post-pharmacist-details", {
-                name: name,
+                username: name,
                 email: email,
                 mobileNumber: mobileNumber,
                 address: address,
-                aadhar: aadhar,
-                secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
+                aadharNumber: aadhar,
               })
               .then((resp) => {
                 setOpen(true);

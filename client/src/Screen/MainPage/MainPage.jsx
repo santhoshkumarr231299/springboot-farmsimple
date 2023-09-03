@@ -124,8 +124,7 @@ function MainPage(props) {
       .post("/update-last-accessed", {
         username: user.username,
         role: user.role,
-        lastAccessedScreen: value,
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
+        lastAccessed: value,
       })
       .then((resp) => {
         //

@@ -64,9 +64,7 @@ function ForgotPassPage() {
   const changePassword = async (e) => {
     e.preventDefault();
     await axios
-      .post("/logged-in", {
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
-      })
+      .post("/logged-in")
       .then((res) => {
         if (res.data.username !== "") {
           let today = new Date();
@@ -95,8 +93,8 @@ function ForgotPassPage() {
       });
     const userForgotPassDetails = {
       username: username.current.value,
-      newPass: newPassword.current.value,
-      conNewPass: conNewPassword.current.value,
+      newPassword: newPassword.current.value,
+      confirmNewPassword: conNewPassword.current.value,
       otp: otp.current.value,
     };
     setIsLoading(true);
@@ -167,8 +165,6 @@ function ForgotPassPage() {
                 setIsLoading(false);
                 setOtpField(true);
               }, 2500);
-              console.log(process.env.REACT_APP_FORGOT_PASS_CHANGE_AUTH);
-              console.log(resp.headers[process.env.REACT_APP_FORGOT_PASS_CHANGE_AUTH]);
               Cookies.set(process.env.REACT_APP_FORGOT_PASS_CHANGE_AUTH, resp.headers[process.env.REACT_APP_FORGOT_PASS_CHANGE_AUTH], {
                 expires: 1,
               });

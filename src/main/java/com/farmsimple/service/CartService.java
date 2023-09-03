@@ -7,9 +7,6 @@ import com.farmsimple.repository.MedicineRepository;
 import com.farmsimple.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,12 +54,5 @@ public class CartService {
             return cartsRepository.getAllByPharmacyNameAndIsOrdered(userModel.getPharmacyName(), 1);
         }
         return new ArrayList<>();
-    }
-    public void updater(String answer) throws Exception {
-        Connection con = null;
-        String query = "update table set column = " + answer;
-        PreparedStatement ps = con.prepareStatement(query);
-
-        ps.executeUpdate();
     }
 }

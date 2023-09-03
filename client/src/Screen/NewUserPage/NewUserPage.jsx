@@ -130,7 +130,6 @@ function NewUserPage() {
       email: email.current.value,
       mobileNumber: phoneNumber.current.value,
       pharmacyName: dispProp ? pharmacyName.current.value : "",
-      otp: otp.current.value,
     };
     let valid = validation();
     if (valid && valid.length > 0) {
@@ -155,6 +154,7 @@ function NewUserPage() {
                     __auth: Cookies.get(
                       process.env.REACT_APP_SECRET_NEW_USER_AUTH_KEY
                     ),
+                    otp: otp.current.value, // sending otp to verify the user
                   },
                 })
                 .then((resp) => {

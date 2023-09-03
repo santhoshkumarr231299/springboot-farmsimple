@@ -28,7 +28,7 @@ public class CartController {
         return jsonResponse.createJsonResponseSuccess(cartService.getCartItems(username), "Got the Cart Items");
     }
 
-    @GetMapping("get-cart-items-count")
+    @GetMapping("/get-cart-items-count")
     public ResponseEntity getCartItemsCount() {
         String username = ""; //get username from session
         return jsonResponse.createJsonResponseSuccess(cartService.getCartItemsCount(username), "Got the Cart Items Count");

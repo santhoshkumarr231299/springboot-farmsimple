@@ -43,24 +43,22 @@ function MedicinePage(props) {
     let temp = [];
     let counter = 1;
     axios
-      .post("/get-medicines", {
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
-      })
+      .get("/get-medicines")
       .then((resp) => {
-        resp.data.forEach((med) => {
+        resp.data.data.forEach((med) => {
           temp.push({
             id: counter++,
-            mid: med.mid,
-            mname: med.mname,
-            mcompany: med.mcompany,
+            mid: med.id,
+            mname: med.medName,
+            mcompany: med.manufacturer,
             quantity: med.quantity,
             dateadded:
               "Date:" +
-              med.dateAdded.substring(0, 10) +
+              med.medicineAddedDate.substring(0, 10) +
               " Time:" +
-              med.dateAdded.substring(11, 16),
+              med.medicineAddedDate.substring(11, 16),
             expirydate: med.expiryDate.substring(0, 10),
-            mrp: med.medMrp,
+            mrp: med.medicineMrp,
             rate: med.medRate,
             status: med.status,
             addedby: med.addedBy,
@@ -267,13 +265,12 @@ function AddMedicinePage(props) {
       axios
         .post("/post-medicine", {
           medName: medName,
-          medCompany: medCompany,
-          medMrp: medMrp,
+          manufacturer: medCompany,
+          medicineMrp: medMrp,
           medRate: medRate,
-          medQuantity: medQuantity,
-          medExpiryDate: medExpiryDate,
-          medStatus: medStatus,
-          secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
+          quantity: medQuantity,
+          expiryDate: medExpiryDate,
+          status: medStatus,
         })
         .then((resp) => {
           setOpen(true);

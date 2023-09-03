@@ -45,18 +45,16 @@ function DeliveryManPage(props) {
     let temp = [];
     let counter = 0;
     axios
-      .post("/get-delivery-men-details", {
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
-      })
+      .post("/get-delivery-men-details")
       .then((resp) => {
         resp.data.forEach((data) => {
           temp.push({
             id: ++counter,
-            name: data.name,
+            name: data.username,
             email: data.email,
             mobilenumber: data.mobileNumber,
             address: data.address,
-            aadhar: data.aadhar,
+            aadhar: data.aadharNumber,
           });
         });
         setDataGridRows(temp);
@@ -241,12 +239,11 @@ function AddDeliveryManPage(props) {
             setIsLoading(true);
             axios
               .post("/post-delivery-man-details", {
-                name: name,
+                username: name,
                 email: email,
                 mobileNumber: mobileNumber,
                 address: address,
-                aadhar: aadhar,
-                secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
+                aadharNumber: aadhar,
               })
               .then((resp) => {
                 setOpen(true);

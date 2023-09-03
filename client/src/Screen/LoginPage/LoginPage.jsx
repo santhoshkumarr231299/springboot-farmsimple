@@ -68,7 +68,7 @@ function LoginPage() {
           .post("/login", {
             username: username.current.value,
             password: password.current.value,
-            pharmacy: selectDisp ? pharmaciesRef.current.value : "",
+            pharmacyName: selectDisp ? pharmaciesRef.current.value : "",
           })
           .then((res) => {
             if (res.data.message === "success") {

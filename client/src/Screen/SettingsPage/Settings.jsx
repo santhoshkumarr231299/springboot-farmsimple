@@ -169,7 +169,6 @@ function UserDetails(props) {
           mobileNumber: user.mobileNumber,
           pharmacyName: user.pharmacyName,
           branchId: user.branchId,
-          secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
         })
         .then((resp) => {
           setOpen(true);
@@ -206,10 +205,9 @@ function UserDetails(props) {
     await axios
       .post("/get-user-details", {
         username: props.username,
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
       })
       .then((resp) => {
-        tempUser = resp.data;
+        tempUser = resp.data.data;
         setIsLoading(false);
       }).catch(err => {
         setIsLoading(false);
@@ -335,9 +333,8 @@ function ChangePass(props) {
       } else {
         await axios
           .post("/update-pass", {
-            newPass: newPass,
-            oldPass: oldPass,
-            secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
+            newPassword: newPass,
+            currentPass: oldPass,
           })
           .then((resp) => {
             setSeverity(resp.data.status);

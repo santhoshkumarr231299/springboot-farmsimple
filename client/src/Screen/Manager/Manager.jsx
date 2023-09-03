@@ -45,16 +45,14 @@ function ManagerReportPage(props) {
     let temp = [];
     let counter = 0;
     axios
-      .post("/get-managers", {
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
-      })
+      .get("/get-managers")
       .then((resp) => {
         resp.data.forEach((data) => {
           temp.push({
             id: ++counter,
             name: data.username,
             email: data.email,
-            branch: data.branch,
+            branch: data.branchId,
             address: data.address,
           });
         });
@@ -251,11 +249,10 @@ function AddManagerPage(props) {
               .post("/post-new-manager", {
                 username: name,
                 email: email,
-                branch: branch,
+                branchId: branch,
                 address: address,
                 mobileNumber: mobileNumber,
                 password: "manager",
-                secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
               })
               .then((resp) => {
                 setOpen(true);

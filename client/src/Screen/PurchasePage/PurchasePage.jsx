@@ -56,11 +56,9 @@ function MedicinePage(props) {
     e.preventDefault();
     setIsLoading(true);
     axios
-      .post("/get-search-medicines", {
-        searchWord: e.target.value,
-      })
+      .get("/get-search-medicines?search=" + e.target.value)
       .then((resp) => {
-        setMedicines(resp.data);
+        setMedicines(resp.data.data);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -71,9 +69,9 @@ function MedicinePage(props) {
 
   const updateCartCount = () => {
     axios
-      .post("/get-cart-items-count")
+      .get("/get-cart-items-count")
       .then((resp) => {
-        setCartItemSize(resp.data.cartSize);
+        setCartItemSize(resp.data.data);
       })
       .catch((err) => {
         console.log("Can't get the Cart Items Count");
@@ -99,9 +97,7 @@ function MedicinePage(props) {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .post("/get-search-medicines", {
-        searchWord: "",
-      })
+      .get("/get-search-medicines?search=")
       .then((resp) => {
         setMedicines(resp.data);
         setIsLoading(false);
@@ -229,15 +225,16 @@ function CartPage(props) {
   const getCartItems = () => {
     setIsDataLoading(true);
     axios
-      .post("/get-cart-items")
+      .get("/get-cart-items")
       .then((resp) => {
         let tempList = [];
         let amt = 0;
-        resp.data.forEach((data) => {
+        let count = 0;
+        resp.data.data.forEach((data) => {
           amt += +data.quantity * +data.price;
           tempList.push({
-            id: data.id,
-            mid: data.mid,
+            id: ++count,
+            mid: data.id,
             medName: data.medName,
             quantity: data.quantity,
             price: data.price,
@@ -279,23 +276,22 @@ function CartPage(props) {
     setIsUpdatingQuantity(true);
     axios
       .post("/update-cart-items", {
-        newQuantity: e.target.value,
-        mid: id,
+        quantity: e.target.value,
+        id: id,
       })
       .then((resp) => {
         if (resp.data.status === "success") {
           axios
-            .post("/get-cart-items", {
-              secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
-            })
+            .get("/get-cart-items")
             .then((resp1) => {
               let tempList = [];
               let amt = 0;
-              resp1.data.forEach((data) => {
+              let count = 0;
+              resp1.data.data.forEach((data) => {
                 amt += +data.quantity * +data.price;
                 tempList.push({
-                  id: data.id,
-                  mid: data.mid,
+                  id: ++count,
+                  mid: data.id,
                   medName: data.medName,
                   quantity: data.quantity,
                   price: data.price,
@@ -318,9 +314,7 @@ function CartPage(props) {
   const makeOrder = async () => {
     setIsLoading(true);
     await axios
-      .post("/make-order", {
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
-      })
+      .post("/make-order")
       .then((resp) => {
         setOpen(true);
         setSeverity(resp.data.status);
@@ -364,19 +358,19 @@ function CartPage(props) {
   const deleteItem = (e, id) => {
     axios
       .post("/delete-cart-items", {
-        mid: id,
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
+        id: id,
       })
       .then((resp) => {
         if (resp.data.status === "success") {
-          axios.post("/get-cart-items").then((resp1) => {
+          axios.get("/get-cart-items").then((resp1) => {
             let tempList = [];
             let amt = 0;
-            resp1.data.forEach((data) => {
+            let count = 0;
+            resp1.data.data.forEach((data) => {
               amt += +data.quantity * +data.price;
               tempList.push({
-                id: data.id,
-                mid: data.mid,
+                id: ++count,
+                mid: data.id,
                 medName: data.medName,
                 quantity: data.quantity,
                 price: data.price,

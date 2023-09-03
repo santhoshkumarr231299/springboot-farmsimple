@@ -99,13 +99,11 @@ function Dashboard() {
 
   useEffect(() => {
     axios
-      .post("/get-dashboard-details", {
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
-      })
+      .post("/get-dashboard-details")
       .then((resp) => {
         list[0].value = resp.data.managersCount;
         list[1].value = resp.data.pharmacistsCount;
-        list[2].value = resp.data.DeliveryMenCount;
+        list[2].value = resp.data.deliveryMenCount;
         list[3].value = resp.data.medicinesCount;
         setData(list);
       })

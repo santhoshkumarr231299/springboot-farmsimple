@@ -29,9 +29,8 @@ export default function PharmacistPage(props) {
       axios
         .post("/decline-orders", {
           username: userM.name,
-          mname: userM.mname,
-          mid: userM.mid,
-          secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
+          medName: userM.mname,
+          id: userM.mid,
         })
         .then((resp) => {
           setOpen(true);
@@ -57,9 +56,8 @@ export default function PharmacistPage(props) {
       axios
         .post("/approve-order", {
           username: userM.name,
-          mname: userM.mname,
-          mid: userM.mid,
-          secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
+          medName: userM.mname,
+          id: userM.mid,
         })
         .then((resp) => {
           setOpen(true);
@@ -83,16 +81,14 @@ export default function PharmacistPage(props) {
     let temp = [];
     let counter = 0;
     axios
-      .post("/get-ordered-items-for-approval", {
-        secretKey: Cookies.get(process.env.REACT_APP_SECRET_COOKIE_KEY),
-      })
+      .get("/get-ordered-items-for-approval")
       .then((resp) => {
-        resp.data.forEach((data) => {
+        resp.data.data.forEach((data) => {
           temp.push({
             id: ++counter,
-            mid: data.mid,
+            mid: data.id,
             name: data.username,
-            mname: data.mname,
+            mname: data.medName,
             quantity: data.quantity,
           });
         });
