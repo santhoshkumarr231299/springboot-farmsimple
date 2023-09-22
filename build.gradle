@@ -34,7 +34,7 @@ dependencies {
 
 defaultTasks 'bootRun'
 
-task npmInstall(type: Exec) {
+tasks.register('npmInstall', Exec) {
     doFirst {
         println "-----------------------------------------"
         println "Started downloading client dependecies..."
@@ -47,12 +47,29 @@ task npmInstall(type: Exec) {
     }
 }
 
-task npmBuild(type: Exec, dependsOn: npmInstall) {
+tasks.register('npmBuild', Exec) {
+    dependsOn npmInstall
     workingDir('client/')
     commandLine 'npm', 'run', 'build'
 }
 
-task cpClientBuild(type: Copy, dependsOn: npmBuild) {
+tasks.register('deleteClientBuild', Exec) {
+    dependsOn npmBuild
+    workingDir('src/main')
+    doFirst {
+        println "---------------------------------"
+        println "Deleting client build in webapp..."
+        commandLine 'rm', '-rf', 'webapp/'
+    }
+    doLast {
+        commandLine 'mkdir', 'webapp'
+        println "Completed deleting client build in webapp"
+        println "----------------------------------------"
+    }
+}
+
+tasks.register('cpClientBuild', Copy) {
+    dependsOn deleteClientBuild
     doFirst {
         println "---------------------------------"
         println "Copying client build to webapp..."
@@ -66,7 +83,22 @@ task cpClientBuild(type: Copy, dependsOn: npmBuild) {
     }
 }
 
-task buildProject(dependsOn: cpClientBuild) {
+tasks.register('cleanupClient', Exec) {
+    dependsOn cpClientBuild
+    doFirst {
+        println "---------------------------------"
+        println "Deleting client node modules..."
+    }
+    workingDir('client/')
+    commandLine 'rm', '-rf', 'build/', 'node_modules/'
+    doLast {
+        println "Completed deleting node modules build"
+        println "----------------------------------------"
+    }
+}
+
+tasks.register('buildProject') {
+    dependsOn cleanupClient
     doFirst {
         println "--------------------------"
         println "Started Building Client..."
