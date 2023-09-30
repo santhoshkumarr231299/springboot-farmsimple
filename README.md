@@ -1,4 +1,8 @@
 # springboot-lifeeasy
+1. Update environmental variables
+2. Run "./gradlew" in terminal.
+3. The server will start.
+
 # Environment Variables Configuration:
 
 # client:
